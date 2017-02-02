@@ -1,0 +1,294 @@
+1)
+
+function User(name) {
+    this.name = name;
+};
+
+var j = User('Jack');
+alert(j.name);
+
+Why would this code not work as expected? Is anything missing?
+
+ANS==============================
+
+1st thing is >>this.name = name;  this is Java pattern where you classify the class variable as this to store the value of the parameters entered
+so the right way is to get a value from the function by using return which was missing
+2nd thing is>>> j.name is used improperly because j is not an object and name is not any property of the object j
+
+function User(name) {
+
+   return name;
+
+};
+
+
+
+var j = User('Jack');
+
+alert(j);
+
+
+
+
+
+
+
+
+
+
+
+
+
+2)
+
+Object.prototype.jack = {};
+
+var a = [1,2,3];
+
+for ( var number in a ) {
+    alert( number )
+}
+
+I'm iterating through this array I defined, it has 3 elements in it.. the numbers 1 2 and 3.. 
+Why on earth is jack showing up?
+
+ANS================================================
+For in loop in  JavaScript is aimed to iterate over object properties. Since we have created an object prototype for all the objects, it will appear. 
+The BEST WAY TO ITERATE THIS LOOP AS>>>>>
+
+for (var i=0; i<a.length; i++) {
+  alert(a[i]);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3)
+
+people = {
+    1:'Jack',
+    2:'Chloe',
+    3:'Bruce',
+}
+
+for ( var person in people ) {
+    alert( person )
+}
+
+Why is this not working in Internet Explorer?
+
+ANS======================
+BECAUSE SOME LOOPS ARE NEW AND NOT ACCEPTABLE BY IE BUT CHROME
+ONE OF THE OTHER EXAMPLE IS forEach(function (arg1, arg2){
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4)
+
+<script>
+    (function() {
+        var jack = 'Jack';
+    })();
+    alert(typeof jack)
+</script>
+Why does it alert undefined when I declared the jack variable to be 'Jack'?
+
+
+ANS==================================================  
+
+<script>
+      var jack;
+    (function() {
+        jack = 'Jack';
+    })();
+    alert(typeof jack);
+</script>
+
+Reason=== var jack was defined in the function therefore scope is limited just within the function
+and also semicolon is misisng from the last line
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5)
+
+function identity() {
+    var name = 'Jack';
+    alert(name);
+    return
+    name
+};
+var who = identity();
+alert(who)
+
+Why does it first alert Jack, then undefined?
+ANS============================================
+
+function identity() {
+    var name = 'Jack';
+    alert(name);
+    return name;
+};
+var who = identity();
+alert(who);
+
+
+
+PROPER WAY TO RETURN SOMETHING IS >>>> return name; 
+it showed undefined because there was no variable after return
+Now with the right code it shows jack two times
+1st one function alert the name Jack
+2nd one as we passed the function with alert(who); so it is returning the value jack so it is like alert(jack).
+Now the code is good
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6)
+
+<script>
+    var ticket = true;
+
+    if (!ticket)
+        alert('you need a ticket');
+        alert('please purchase a ticket.')
+</script>
+
+ticket is set to true. 
+Why is it alerting that I need to purchase one?
+
+ANS=====================================================
+FIRST OF ALL IT IS BAD PRACTICE TO WRITE THE CODE LIKE THAT WIHOUT BRACKETS
+AND THE REASON WHY IT SKIPPED THE FIRST ONE BECAUSE THE CONDITION DIDN'T MEET SO IT ALERTED THE SECOND ONE
+
+
+
+THE RIGHT WAY TO IMPLEMENT THIS CODE
+
+ var ticket = true;
+
+
+
+    
+if (!ticket)
+
+   
+ { 
+alert('you need a ticket');
+}
+
+       
+
+ alert('please purchase a ticket.') ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7)
+
+<a href="#">text</a>
+<br>
+<a href="#">link</a>
+<script>
+var as = document.getElementsByTagName('a');
+for ( var i = 0; i < as.length; i++) {
+    as[i].onclick = function() {
+        alert(i);
+        return false;
+    }
+}
+</script>
+
+Why do the anchors, when clicked on, alert 2 instead of their respective counter inside of the loop (0 and 1)? 
+How can you fix the code so that it does alert the right number?
+
+ANS=======================================
+
+IT ALERTS NUMBER 2 ON BOTH BECAUSE 
+ONCE THE LOOP IS OVER THE VALUE OF I WILL BE 2 , THE FUNCTION JOB IS TO ALERT THE VALUE OF I ONCLICK SO IT'S RETURNING 2. 
+Every anonymous function thet we define inside your loop reads the value of "i" at the end of the for loop.
+
+
+<script>
+
+function addingClick(element, i) {
+    element.onclick = function() {
+        alert(i);
+       
+    }
+}
+
+var as = document.getElementsByTagName('a');
+for ( var i = 0; i < as.length; i++) {
+    addingClick(as[i],i);
+}
+
+</script>
+
+
+
+
+
+
