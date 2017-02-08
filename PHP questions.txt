@@ -1,0 +1,150 @@
+PHP Test
+ 
+1)
+
+$a = 4;
+for ($b = 0; $b <= $a; $b++) {
+    $c++;
+}
+
+What is the value of $c ? 5 but c is not initialized anywhere
+
+
+
+2)
+
+$a[] = "a";
+$a[] = "b";
+$a[] = "c";
+
+What is the value of $a[2] ? c
+
+
+
+3)
+
+$a = 200.5;
+$b = 2005;
+$c = "2005";
+
+Which of the above variables type is integer ?   $b
+
+
+
+4) 
+
+$a = '1';
+$b = &$a;
+$b = "2$a";
+
+What is the value of $b ? 21
+
+
+
+5) 
+
+Joe has created a variable with the space character (' ') for its name. Print the value of that variable.
+
+echo $var;
+
+
+
+6)
+
+Is this a valid function declaration in PHP:
+
+function foo($a, $a) {
+    echo $a;
+}
+IT IS VALID BUT AT THE SAME TIME YOU CANNOT REDEFINE VAR$A 
+function foo($a, $b) {
+    echo $a;
+}
+foo(6,7);
+
+
+
+
+
+
+
+7)
+
+// $_GET contains this:
+$_GET['id'] = '1 OR 1=1';
+
+$id = mysql_real_escape_string($_GET['id']);    
+$sql = "SELECT * FROM table WHERE id = $id";
+
+Consider the code above. Will my query be safe against the injection attack?
+
+
+
+8)
+
+<?php
+
+class A {
+
+    static $ct = 0;
+
+    public function __construct() {
+        static::$ct++;
+    }
+}
+
+class B extends A {
+
+    public function foo() {
+        echo static::$ct;
+    }
+}
+
+class C extends A {
+
+    public function foo() {
+        echo static::$ct;
+    }
+}
+
+$b = new B();
+$b = new B();
+$c = new C();
+
+$c->foo();
+
+What is the output of $c->foo()?  3
+
+
+
+9)
+
+<?php
+
+namespace A;
+
+class A {
+    private $values  = array(
+        'foo' => 0,
+        'bar' => 1,
+    ); 
+}
+
+$a = new A();
+echo $a->foo . PHP_EOL;
+echo $a->bar . PHP_EOL;
+echo $a->zoo . PHP_EOL;
+
+Change class A to implement the magic method __get so that it treats the indexes of
+the private property $values as public properties. A call to $a->foo should return the
+value of $this->values['foo'], for example.
+
+When a call is made to a non-existent array index is made, throw an exception.
+
+
+
+10)
+
+Write a function that will multiply two integers together without using the * operator.
+
+
