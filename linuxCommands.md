@@ -33,11 +33,14 @@
 | tar -cvf combined.tar file1.txt file2.txt | combines 2 files into one as .tar   |
 | tar -cvfz allSalesreports.tar.gz sales*.txt | setting new file name as allSalesreports =is the input of all sales files    |
 |tar -tf allSalesreports.tar.gz  | -t listing the contents of tar file   |
-|nohup test.sh &   | -nohup means  no hangup , & means run in background, keep running backgroudn jobs even if user is logged out   |
+| **_RUN PROCESSES IN BACKGROUND WITHOUT HUNGUP_** |
+|nohup test.sh &   | -nohup means  no hangup , & means run in background, keep running backgroud jobs even if user is logged out   |
 |jobs -l   | it will  list all background running jobs   |
+| **_SHOW AND KILL PROCESSES_** |
 |ps -ef   |  shows all processes according to hierarchy |
 |ps -ef pipe grep test   | presents a lists which consists of test   |
 |kill -9 or -15 pid  | it will kill/terminate the process, -15 means gracefully end the process, -9 means forcefully   |
+| **_GET ALL SERVICES AND STATUS_** |
 |service --status-all | it will list all services   |
 |service servicename status   | status of a service  |
 |sudo service servicename start/stop/restart   | it will start, stop or restart our service  |
@@ -50,22 +53,22 @@
 |export pipe grep path   |  it will print PATH variable setting |
 |echo $PATH   | it will print path settings  |
 |export JAVA_HOME=/usr/bin/jdk  |   |
+| **_FTP -copy config file to remote server over FTP_** |
+|ftp ftpLink   |it will login to FTP server if you've correct password and username   |
+| put or get   | transfer files to or get from server  |
+|scp ~/someFile.txt user@remote_host.com:tmp/remote/directory   | scp means secure copy from local machine to remove server dest path (uploading) |
+|scp user@remote_host.com:tmp/remote/directory ~/downloadfile.txt   | download from remote server to local machine  |
 |   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
+| **_GET MACHINE UPTIME_** |
+| uptime  |  gives machine uptime |
+| **_VIEW KERNEL MESSAGES_** | VERY HELPFUL IN DIAGNOSING IN CASE OF DEVICE FAILURE , KERNEL WILL BE AWARE OF IT IN CASES OF MALFUNCTION
+| dmesg pipe grep sda | to check if hard disk was directed  |
+|dmesg pipe grep -i usb  | info on USB's  |
+|dmesg pipe grep -i dma   | info on direct memory access  |
+|dmesg pipe grep -i tty   |info on serial ports   |
+|dmesg pipe grep -i memory   |info on how much memory we have   |
+|dmesg -c   |dmesg buffer is cleared   |
+| tail -f /var/log/dmesg  |shows latest info from the bottom as it says tail in command   |
 |   |   |
 |   |   |
 |   |   |
