@@ -24,6 +24,15 @@
 | cat file1.txt file 2.txt > concatinated_file  | Merge data of 2 files together in one file   |
 |head -5   |  displays 1st 5 lines |
 |tail -5   |  displays last 5 lines |
+| **_FILTERS/TEXT PROCESSORS_** |
+| cut -c1-2 somefile.txt  | it will cut fist 2 letters of a word in a file  |
+| awk '{print $1'} somefile.txt  | prints first column from a file  |
+| grep someword test.txt | filters .txt with that word  |
+| sort  |to sort a-z  , -r for reverse sort |
+|  uniq | removes all duplicates  |
+| **_COMPARE FILES_** |
+| diff file1.txt file2.txt |    |
+| cmp file1 file2|   |
 | **_LIST FILES_** |
 | ls  |    list files|
 |  ls -ltr | list files with -l means long listing with permissions -t sort according to modification time newer first  -r older files listed at top |
@@ -52,6 +61,8 @@
 | tar -xvf combined.tar file1.txt file2.txt | Extract files to their original format   |
 | tar -cvfz allSalesreports.tar.gz sales*.txt | setting new file name as allSalesreports =is the input of all sales files    |
 |tar -tf allSalesreports.tar.gz  | -t listing the contents of tar file   |
+| **_TRUNCATE_** |
+| truncate -s 10 | date will be lost but it will shrink the size to 10 bytes   |
 | **_RUN PROCESSES IN BACKGROUND WITHOUT HUNGUP_** |
 |nohup test.sh &   | -nohup means  no hangup , & means run in background, keep running backgroud jobs even if user is logged out   |
 |jobs -l   | it will  list all background running jobs   |
