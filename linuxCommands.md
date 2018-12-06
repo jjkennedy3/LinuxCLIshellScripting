@@ -27,6 +27,7 @@
 | cat test.txt pipe pg  | for large text files, it helps view the content page by page  |
 |head -5   |  displays 1st 5 lines |
 |tail -5   |  displays last 5 lines |
+|tail -f   |  displays last updated ones |
 | **_FILTERS/TEXT PROCESSORS_** |
 | cut -c1-2 somefile.txt  | it will cut fist 2 letters of a word in a file  |
 | awk '{print $1'} somefile.txt  | prints first column from a file  |
@@ -190,16 +191,43 @@
 |kill -9 'Lsof -t -u username| kill processes of specific user   |
 | **_CPU INFO AND MEM INFO_**  |
 | cat /proc/cpuinfo  |  shows cpuinfo |
-|  cat /proc/meminfo  |  shows meminfo |
-| **_LOG MONITORING_**  |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
-|   |   |
+| cat /proc/meminfo  |  shows meminfo |
+|uname -a |   |
+|dmidecode | sys info  base info etc...  |
+|arch | x86 or 64 bit architechure  |
+| **_LOG MONITORING_**  | directory /var/log
+| boot  | shows the log with [ok] messages and red where problem occurs |
+| chronyd or NTP  |   |
+| cron  |   |
+| maillog  | troubleshotting with mail services  |
+| secure | troubleshotting with users loggin in /out  |
+| messages| all hardware, software, process info   |
+| script logfile.log|   records your terminal commands, press exit to exit|
+| **_SHUTDOWN HALT REBOOT_**  |
+| shutdown  | shutdown  |
+| halt  | forcefully shutsdown  |
+| reboot  | reboot your machine  |
+| **_CHANGE HOSTNAME_**  |
+|hostnamectl set-hostname newName   |   changes hostname  |
+| **_RECOVER ROOT PASSWORD_**  |
+| please refer to video  |   |
+| **_SYSTEM RUN LEVELS_**  |
+|  who -r | checks for run level  |
+|  0 |  shut down the system init 0 |
+|   1|  single user mode 1 |
+|   init 6| reboot the system  |
+| init 2  | multiuser mode without networking  |
+|  init 3 | multiuser mode with networking   |
+|  init 5 | multiuser mode with networking and gui  |
+| **_LINUX BOOT PROCESS_**  |
+|  BIOS |  basic input/output system- checks boot loader, HD ,floppy from where to boot system up|
+|  MBR |  master boot record, 1st sector of your disk to start the computer |
+|   GRUB| grand unified bootlaoder, whihc kernel version to install   |
+|  KERNEL |   |
+|  INIT |   |
+|  Runlevel |   |
+| **_STORAGE_**  |
+| local  |   |
 |   |   |
 |   |   |
 |   |   |
