@@ -36,7 +36,6 @@ fi
 
 
 
-
 #Logical AND operator
 age=25
 
@@ -87,3 +86,38 @@ if [ "$age" -gt 18 -o "$age" -lt 30 ]
 		echo " valid age"
 		else
 		echo "age not valid"
+
+
+
+
+
+# Arthematic operations
+num1=20
+num2=5
+echo $(( num1 + num2 ))
+echo $(( num1 % num2 ))
+#or 
+echo $(expr $num1 - $num2 )
+echo $(( num1 + num2 ))
+
+echo "20.5+5" | bc
+echo "scale=2;20.5/5" | bc  #scale means upto 2 decimal places
+echo "scale=2;sqrt($num)" | bc -l #scale means upto 2 decimal places
+echo "scale=2;3^3" | bc -l #-l for library
+
+
+# SWITCH CASE
+
+vehicle=1
+
+case "$vehicle" in
+	"car")
+		echo "$vehicle"
+	;;
+	"van")
+		echo "$vehicle"
+	;;
+	*)
+		echo "default"
+	;;
+esac
