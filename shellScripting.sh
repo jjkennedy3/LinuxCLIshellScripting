@@ -20,7 +20,7 @@ read -p "Enter a number : " num
 echo -e "enter the name of the file : \c"
 read filename
 
-if [-e $filename]
+if [ -e $filename ]
 #-e stands for exists if file exists  
 #-d for directory  
 #-f for regular file  
@@ -55,7 +55,7 @@ then
 
 #another way
 if [[ "$age" -gt 18 && "$age" -lt 30 ]]
-	then
+then
 		echo " valid age"
 		else
 		echo "age not valid"
@@ -121,3 +121,42 @@ case "$vehicle" in
 		echo "default"
 	;;
 esac
+
+
+#using REGEX
+read value
+case "$value" in
+	[a-z] )
+		echo "$value"
+	;;
+	[A-Z] )
+		echo "$value"
+	;;
+	*)
+		echo "default"
+	;;
+esac
+
+
+
+
+
+#ARRAYS
+os=('ubuntu' 'windows' 'kali')
+os[6]='mac'
+
+unset os[2]  # remove an element
+echo "${os[@]}"  #  \\ @ stands for all printing all elements 
+echo "${os[1]}"
+echo "${os[!@]}" # \\ !@ means oppposite means print all indexes ,  print the indexes of the array  
+echo "${#os[@]}"  # print the length of the array  
+
+
+
+
+#while loops
+n=1
+while [ $n -le 10 ]; do
+		echo "$n"
+		n=$(( n+1 ))
+done
