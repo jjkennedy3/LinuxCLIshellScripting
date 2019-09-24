@@ -4,16 +4,19 @@
 |   |   |
 |---|---|
 | **_CREATING, MOVING, COPYING FILES_** |
+| mkdir -p dir1/dir2/dir3  | creating directory inside directory  |
 | mv name.text anothername.txt  | renames file to anothername.txt  |
-| mv name.text anothername.txt  | renames file to anothername.txt  |
-|  rm example.txt |  Remove a file |
+|  rm example.txt  -r  -f |  Remove a file  -r recursively -f force|
+|  rm -f  *tar|  Remove multiple files ending with .tar|
 | touch example.txt  |   Creates a text file|
+| touch {file1, file2, file3}  |   Creates multiple text file with the helpof {}|
 | cat example.txt |  Reads the file |
-|  echo " some more text" >> example.txt | appends to existing file  |
 | echo " some  text" pipe tee newFile.txt  | tee will display text to console as well as create a new file with text  |
 | echo " some more text" pipe tee -a newFile.txt  | tee will display text to console as well as -a append to existing file.  |
-| **_COMBINING FILES_** |
-| cat file1.txt file 2.txt > concatinated_file  | Merge data of 2 files together in one file   |
+| **_REDIRECTIONAL INPUT/OUTPUT_** |
+| cat file1.txt > /home/user/somedirectory/random_file  | > this is redirectional output, contents of file1 will be output to random file  |
+|  echo " some more text" >> /home/user/somedirectory/random_file | appends to random_file file NOT OVERWRITE  |
+| cat file1.txt file 2.txt > concatenated_file  | Merge data of 2 files together in one concatenated_file   |
 | **_SPLITTING FILES_** |
 |  split -l 2 somefile.txt  new|  split 2 lines in one new .txt file |
 | **_COUNTING_** |
@@ -31,13 +34,17 @@
 | **_FILTERS/TEXT PROCESSORS_** |
 | cut -c1-2 somefile.txt  | it will cut fist 2 letters of a word in a file  |
 | awk '{print $1'} somefile.txt  | prints first column from a file  |
-| grep someword test.txt | filters .txt with that word  |
+| grep someword test.txt | gets the line having that pattern  |
 | sort  |to sort a-z  , -r for reverse sort |
 |  uniq | removes all duplicates  |
 | **_COMPARE FILES_** |
 | diff file1.txt file2.txt |    |
 | cmp file1 file2|   |
-| **_sed command_** |
+| **_FILE PERMISSIONS_** |
+| 4read 2write 1execute |    |
+| chmod|   |
+| chown ownername:groupname|  change ownership |
+| **_SED COMMAND_** |
 |  sed 's/Kenny/Lenny/g' sometextfile.txt |s for substitute kenny with lenny g- globally   |
 |  sed -i 's/Kenny/Lenny/g' sometextfile.txt | -i means insert that original file, make changes to original file s for substitute kenny with lenny g- globally   |
 |  sed 's/Kenny//g' sometextfile.txt | it removes that word from file  |
@@ -56,6 +63,7 @@
 | ls -ltr | list files with -l means long listing with permissions -t sort according to modification time newer first  -r older files listed at top |
 |ls -ltr /example/directory/\*sales\*.txt   | searching files with name sales , it's a wildcard search  |
 | find /directory/ -iname \*sales\*  | if you're not sure where exactly are these specific files  USE find with wildcard search -i means ignore case sensitivity|
+| locate  | a great command to find if DB is updated, faster than find |
 | ls -al   | list all hidden files with directories  |
 | ls -R  pipe grep ./ | It will list all directories, -R is recursively  |
 | **_DISK USAGE_** |
@@ -69,16 +77,27 @@
 | gzip -r  | zip all files in a folder inside a folder   |
 | **_VI EDITOR_** |
 | vi test.txt | editor which will create a file if one doesn't exists  |
+|h j k l  | move right left up and down  |
 | press i  | for insert mode and then start typing   |
-| press esc and then type : wq|  it will quit |
+| press ESC  | it will go to command mode as if you're on terminal  |
+| press dd | it will cut the entire line where cursor is IN COMMAND MODE  |
+| press cc | it will delete the entire line and put you in insert mode |
+| press yy | it will copy the entire line where cursor is IN COMMAND MODE  |
+| press p | paste  the copied yy line where cursor points to  |
+| press u| undo  the line just pasted  |
+| press shift+p | paste before the line where cursor points to  |
+| press [1 or 2 or 3]shift+g <br/> shift+g| to go to top nth line<br/> to got to bottom line  |
+| press cw| change word in command mode, place cursor on 1st letter of word will remove entire word, if on 2nd letter will remove 2nd letter only  |
+| press shift+r|  in command mode to repalce text or line |
+| press esc and then type : wq|  it will save and quit |
 | :q!     | discard typed changes ,quit without saving  |
 |  :q | quit without saving  |
-|  :%s/Kenny/Peter/ then hit enter | substitute word in VI editor  |
-|  ESC and then press G | takes you to last line  |
+|  :%s/Kenny/Peter/ then hit enter | replace kenny with peter in VI editor /g to do it globally all over |
 |  press $ | cursor will move to the very end of the line   |
 | mail -a file.txt/gz -s "report"  manager@mail.com < /dev/null   |  mail compressed file by email, -s for subject, -a for attachment, don't want this command to return anything so < /dev/null |
-| **_TAR FILES_** |
-| tar -cvf combined.tar file1.txt file2.txt | combines 2 files into one as .tar   |
+| **_TAR FILES_** | **_GROUP OF FILES INTO ONE BUT NOT COMPRESSION_**
+| tar -cvf combined.tar directory1/ file1.txt file2.txt | combines directory and 2 files into one as .tar   -compress -verbose -what file  you'd like|
+| tar -cvzf combined.tar.gz  directory1/ file1.txt file2.txt | combines directory and 2 files into one as .tar  as well -z gZIP it at same time that's why tar.gz|
 | tar -xvf combined.tar file1.txt file2.txt | Extract files to their original format   |
 | tar -cvfz allSalesreports.tar.gz sales*.txt | setting new file name as allSalesreports =is the input of all sales files    |
 |tar -tf allSalesreports.tar.gz  | -t listing the contents of tar file   |
@@ -93,6 +112,7 @@
 | put or get   | transfer files to or get from server  |
 |scp ~/someFile.txt user@remote_host.com:tmp/remote/directory   | scp means secure copy from local machine to remove server dest path (uploading) |
 |scp user@remote_host.com:tmp/remote/directory ~/downloadfile.txt   | download from remote server to local machine  |
+|sftp user@54.165.122.155<br/> sftp>ls<br/>   sftp get file1<br/>   sftp>put file2| download from remote server to local machine  |
 | **_USER ACCOUNT MANAGEMENT_**  |
 | sudo -  | become root user  |
 | sudo passwd user  |  set password for user |
