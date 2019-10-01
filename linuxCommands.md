@@ -66,15 +66,13 @@
 | locate  | a great command to find if DB is updated, faster than find |
 | ls -al   | list all hidden files with directories  |
 | ls -R  pipe grep ./ | It will list all directories, -R is recursively  |
-| **_DISK USAGE_** |
-|  du -skh * pipe sort -nr | it will list all files in kb, -nr numeric sort in reverse order, bigger ones first, du means disk usage, -s is summarize, -h is human readable format, -k is block size   |
-| df  |shows total disk size with partitions, if ever we see disk use is close to 90% means we're running out of space   |
-| du -skh * pipe sort -nr pipe head -5 | lists only top 5 files  |
 | **_GZIP_** |
 | gzip filename.txt  | compress your file, original will be deleted  |
 | gzip -d   | to decompress    |
 | gzip -l  | gives details on compression   |
 | gzip -r  | zip all files in a folder inside a folder   |
+| **_TRUNCATE_** |
+| truncate -s 10 | date will be lost but it will shrink the size to 10 bytes|
 | **_VI EDITOR_** |
 | vi test.txt | editor which will create a file if one doesn't exists  |
 |h j k l  | move right left up and down  |
@@ -88,7 +86,7 @@
 | press shift+p | paste before the line where cursor points to  |
 | press [1 or 2 or 3]shift+g <br/> shift+g| to go to top nth line<br/> to got to bottom line  |
 | press cw| change word in command mode, place cursor on 1st letter of word will remove entire word, if on 2nd letter will remove 2nd letter only  |
-| press shift+r|  in command mode to repalce text or line |
+| press shift+r|  in command mode to replace text or line |
 | press esc and then type : wq|  it will save and quit |
 | :q!     | discard typed changes ,quit without saving  |
 |  :q | quit without saving  |
@@ -101,18 +99,93 @@
 | tar -xvf combined.tar file1.txt file2.txt | Extract files to their original format   |
 | tar -cvfz allSalesreports.tar.gz sales*.txt | setting new file name as allSalesreports =is the input of all sales files    |
 |tar -tf allSalesreports.tar.gz  | -t listing the contents of tar file   |
-| **_TRUNCATE_** |
-| truncate -s 10 | date will be lost but it will shrink the size to 10 bytes   |
-| **_GET ALL SERVICES AND STATUS_** |
-|service --status-all | it will list all services   |
-|service servicename status   | status of a service  |
-|sudo service servicename start/stop/restart   | it will start, stop or restart our service  |
+| **_SHOW AND KILL PROCESSES_** |
+|pgrep gnome -l   |  shows all processes related to gnome with -l details |
+|pgrep gnome -v -u username   |  shows all processes related to users EXCEPT the one specified -v is inverse|
+|pgrep -u username -l appname  |  shows app running by that specific user |
+|ps -aux   |  shows all processes user oriented, where it started, with details |
+|ps axo pid,comm,nice |  shows all processes with pid, command,nice level (-20 to +19,0 is default, higher number low priority) |
+|ps -ef   |  shows all processes according to hierarchy |
+|ps -ef pipe grep test   | presents a lists which consists of test   |
+|kill -9 or -15 pid  | it will kill/terminate the process, -15 means gracefully end the process, -9 means forcefully   |
+|kill -l | lists all kill signals, important for sys admin  |
+|kill -SIGSTOP %1 | stop the job for now, job #1  |
+|kill -SIGCONT %1 | continue the job for now, job #1  |
+|pkill  |kills a process by name   |
+|pkill -t pts/1 |kills all processes for that user launched from terminal   |
+| **_ADJUSTING PROCESSS PRIORITY_** |
+|systemctl stop httpd  | stop the service first and then increase priority  |
+|nice -n 0 httpd  | start this program with niceness of level 0  |
+|renice -n 10 2879  | changing niceness level without killing the program  |
+|renice -n 10 $(pgrep httpd)  | changing niceness level for all similar programs by using subshell $()  |
+| **_LISTING HIGH CPU USAGE PROCESSES_** | 
+|w  |  number of users logged in  , uptime, load average 0.03 (past 1 min), 0.07 (past 5 min) ,0.06(past 15min) |
+|cat /proc/cpuinfo pipe grep"model name" pipe wc -l  | gives the number of cpu and then divide the load average (for eg). 1.79/2(#no of processors) =0.895 which means 89% of cpu is being utilized |
+|top   | list the processes taking HIGH CPU usage  |
+|top  and then press P | sort processes with highest CPU  |
+|top  and then press M | sort processes with highest Mem  |
+|top  and then press k| to kill aprocess listed with PID  |
+|top  and then press r | renice a process listed with PID  |
+|top press i   | ignores idle proceses  |
+|top -u name   | it will filter processes by that name |
+|top -n 2   | run it 2 number of times and then exit |
+|top -d 2   | live update it every 2 seconds |
+|free -m  | free memory in mb |
+| **_RUN PROCESSES BACKGROUND/FOREGROUND_** |
+|nohup test.sh &   | -nohup means  no hangup , & means run in background, keep running backgroud jobs even if user is logged out   |
+|nohup test.sh & > /dev/null 2>&1 &  | no log messages being generated  |
+|jobs -l   | it will  list all background running jobs   |
+| CTRL +Z  |sleep 100, sleeping 100 secs and then ctrl +z to stop and then press bg it in bg   |
+| bg fg  |background foreground   |
+|  nice -19 to 20 | higher to lower priority |
+| **_LOG MONITORING  <br/>  cd /var/log_**  | Located all types of log files
+|head logfile.txt -n 5   |  displays first 5 lines or by default is 10 without n |
+|tail logfile.txt -n 5   |  displays last 5 lines or by default is 10 without n |
+|tail logfile.txt -f   |  displays last updated ones |
+|man systemd-journald | system daemon and journal daemon which represents all logs updated recently  |
+|man systemd-journald | system daemon and journal daemon which represents all logs updated recently since all logs goes through journald  |
+| rsyslog.conf  | file in cd /etc , under #rules gives info what log is located in which log file   |
+|journalctl -xn| recent logs  with x for explanation|
+|journalctl -f| keeps listening to messages  |
+|journalctl -p info| type of log file you want to see, .info  |
+|systemctl -t| list of different unit configuration files  |
+|journalctl _SYSTEM_UNIT=httpd.service| show system unit file with the help of journalctl  |
+|journalctl --since=yesterday| if the system has been running since yesterday because files are temporary unless we changed the option  |
+| boot  | shows the log with [ok] messages and red where problem occurs |
+| chronyd or NTP  |   |
+| cron  |   |
+| maillog  | troubleshoting with mail services  |
+| secure | troubleshotting with users loggin in /out  |
+| messages| all hardware, software, process info   |
+| script logfile.log|   records your terminal commands, press exit to exit|
 | **_FTP -copy config file to remote server over FTP_** |
 |ftp ftpLink   |it will login to FTP server if you've correct password and username   |
 | put or get   | transfer files to or get from server  |
 |scp ~/someFile.txt user@remote_host.com:tmp/remote/directory   | scp means secure copy from local machine to remove server dest path (uploading) |
 |scp user@remote_host.com:tmp/remote/directory ~/downloadfile.txt   | download from remote server to local machine  |
 |sftp user@54.165.122.155<br/> sftp>ls<br/>   sftp get file1<br/>   sftp>put file2| download from remote server to local machine  |
+| **_GET ALL SERVICES AND STATUS_** |
+|systemctl start/stop/enable servicename | it will start/stop/enable  |
+|systemctl is-enabled servicename | it will check if it's enabled  |
+|service --status-all | it will list all services   |
+|service servicename status   | status of a service  |
+|sudo service servicename start/stop/restart   | it will start, stop or restart our service  |
+| systemctl restart ntpd | start an app after bootup d means daemon which means process runs in background  |
+|systemctl status rsyslog  |  shows status of a process|
+| **_CONFIGURE LOCAL STORAGE_**  |
+| cd /dev  | we see attached device storage here  |
+|  **MBR partition** |  partition is a traditional and an old one, can only have 4 partitions of 2TB's |
+| fdisk| it manages MBR partitions|
+| mkfs -t xfs partitionName(for eg. xvdf1)| it formats the partition with file format (file systems-vfat, ext4, and xfs) |
+| blkid | get the partition UUID  you want to mount and use|
+|cd /mnt <br/> mkdir mymount <br/> mount /dev/xvdf1 /mnt/mymount  <br/> OR mount -U uuid /mnt/mymount| Mounting file system otherwise you won't be able to use it|
+|umount /mnt/mymount | it will unmount the partition|
+| df -h |shows total disk size with partitions, if ever we see disk use is close to 90% means we're running out of space   |
+| partprobe| whenever we delete/ add a partition, it reloads partition info just in case if kernel is not able to do it, kind of refresh button |
+| du -skh * pipe sort -nr pipe head -5 | lists only top 5 files  |
+| **GPT partition**|  modern partitioning scheme which can have many partitions|
+| gdisk /dev/xvdf | we will create or manage partitions|
+| mkfs -t xfs partitionName(for eg. xvdf1)| it formats the partition with file format (file systems-vfat, ext4, and xfs) |
 | **_USER ACCOUNT MANAGEMENT_**  |
 | sudo -  | become root user  |
 | sudo passwd user  |  set password for user |
@@ -127,9 +200,10 @@
 | su -username  | switch user   |
 | **_MONITOR USERS_**  |
 |who   |how many people are logged in    |
-| last  |  all users logged in when  |
-| w  |  user logged in since when , idle time and all |
-| finger  | traces an user idle time, since when loggen in   |
+|last  |  all users logged in when  |
+|w  |  number of users logged in  , uptime, load average 0.03 (past 1 min), 0.07 (past 5 min) ,0.06(past 15min) |
+|finger  | traces an user idle time, since when loggen in   |
+|uptime  |  gives machine uptime |
 | **_TALK TO USERS TO BROADCAST IMPORTANT INFO_**  |
 |wall   |  your message and then ctrl +D  |
 |write user   |  to specific user |
@@ -140,33 +214,12 @@
 | LDAP  |lightweight directory access protocol   |
 | **_LINUX UTILITY COMMANDS_**  |
 | date  | gives date and time  |
-| uptime  |  gives machine uptime |
 | which  date| tells where the command is located, commands are basically scripts written by developers  |
 |  cal | gives calender  |
 | bc  | binary calc  |
-| **_PROCESSES AND SERVICES COMMANDS_**  |
-| systemctl restart ntpd | start an app after bootup d means daemon which means process runs in background  |
-|systemctl status rsyslog  |  shows status of a process|
-| **_RUN PROCESSES BACKGROUND/FOREGROUND_** |
-|nohup test.sh &   | -nohup means  no hangup , & means run in background, keep running backgroud jobs even if user is logged out   |
-|nohup test.sh & > /dev/null 2>&1 &  | no log messages being generated  |
-|jobs -l   | it will  list all background running jobs   |
-| CTRL +Z  |sleep 100, sleeping 100 secs and then ctrl +z to stop and then press bg it in bg   |
-| bg fg  |background foreground   |
-|  nice -19 to 20 | lower with higher priority  |
 | **_TASK SCHEDULING WITH CRONTAB_**  |
 | crontab -e  | Minute hour */specificDayOfMonth */specificMonth weekday1-5mondayToFriday |
 |cd to etc   |diff types of folder ,  weekely, hourly , monthly and just simply put your script  |
-| **_SHOW AND KILL PROCESSES_** |
-|ps -ef   |  shows all processes according to hierarchy |
-|ps -ef pipe grep test   | presents a lists which consists of test   |
-|kill -9 or -15 pid  | it will kill/terminate the process, -15 means gracefully end the process, -9 means forcefully   |
-| pkill  |kills a process by name   |
-| **_LISTING HIGH CPU USAGE PROCESSES_** | 
-|top   | list the processes taking HIGH CPU usage  |
-|top press i   | ignores idle proceses  |
-|top -u name   | it will filter processes by that name |
-|free -m  | free memory in mb |
 | **_CHECK ENVIRONMENT VARIABLES OR SERVER ENV VARS_** |
 |export | shows all environment varaiables of a machine |  
 |export pipe grep path   |  it will print PATH variable setting |
@@ -215,17 +268,12 @@
 |uname -a |   |
 |dmidecode | sys info  base info etc...  |
 |arch | x86 or 64 bit architechure  |
-| **_LOG MONITORING_**  | directory /var/log
-| boot  | shows the log with [ok] messages and red where problem occurs |
-| chronyd or NTP  |   |
-| cron  |   |
-| maillog  | troubleshotting with mail services  |
-| secure | troubleshotting with users loggin in /out  |
-| messages| all hardware, software, process info   |
-| script logfile.log|   records your terminal commands, press exit to exit|
-| **_SHUTDOWN HALT REBOOT_**  |
-| shutdown  | shutdown  |
-| halt  | forcefully shutsdown  |
+| **_SHUTDOWN HALT REBOOT_**  | **_systemd is controlling system levels shutdown, reboot instead of init_**
+| shutdown -r +5 System going down for reboot | r for reboot, 5 minutes, a wall message which notify other logged in users |
+| shutdown -r now | reboot now |
+| shutdown -r 00:00 | reboot at 12 am |
+| shutdown -h | halt |
+| shutdown -P | Power off machine |
 | reboot  | reboot your machine  |
 | **_CHANGE HOSTNAME_**  |
 |hostnamectl set-hostname newName   |   changes hostname  |
@@ -239,15 +287,6 @@
 | init 2  | multiuser mode without networking  |
 |  init 3 | multiuser mode with networking   |
 |  init 5 | multiuser mode with networking and gui  |
-| **_LINUX BOOT PROCESS_**  |
-|  BIOS |  basic input/output system- checks boot loader, HD ,floppy from where to boot system up|
-|  MBR |  master boot record, 1st sector of your disk to start the computer |
-|   GRUB| grand unified bootlaoder, whihc kernel version to install   |
-|  KERNEL |   |
-|  INIT |   |
-|  Runlevel |   |
-| **_STORAGE_**  |
-| local  |   |
 |   |   |
 |   |   |
 |   |   |
