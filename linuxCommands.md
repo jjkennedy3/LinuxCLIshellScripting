@@ -14,7 +14,7 @@
 |`for i in $(df -h|grep ACS|awk '{print $NF}'); do du -sh $i/2020* | grep G |tr "G" " "|awk '{ sum+=$1} END {print sum}';done`|looping over the folderpath obtained and getting total space consued by $path/2020* with the help of tr and awk|
 |`zcat some.log.gz|grep Throughput|awk '{ sum+=$3}END{print "Average = ", sum/NR}'`  Average =  2.78423|We are using awk with a bit of script to filter the output|
 |`echo stackoverflow|tr -d '\n' | wc -c`|It will give 13|
-|` cat some.log | grep -i speed | awk '{print $8}' | sed -r 's/(\^|<|\[|\])/ /g' | awk -F ',' '{sum+=$1}END{print "Average = ", sum/NR}' `|Here powerful sed comes into play using regex so that we can calculate speed using AWK command|
+|``` cat some.log | grep -i speed | awk '{print $8}' | sed -r 's/(\^|<|\[|\])/ /g' | awk -F ',' '{sum+=$1}END{print "Average = ", sum/NR}' ```|Here powerful sed comes into play using regex so that we can calculate speed using AWK command|
 | **_CREATING, MOVING, COPYING FILES_** |
 | mkdir -p dir1/dir2/dir3  | creating directory inside directory  |
 | mv name.text anothername.txt  | renames file to anothername.txt  |
