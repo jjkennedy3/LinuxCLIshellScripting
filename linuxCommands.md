@@ -14,7 +14,7 @@
 |for i in $(df -h\|grep ACS\|awk '{print $NF}'); do du -sh $i/2020* \| grep G \|tr "G" " "\|awk '{ sum+=$1} END {print sum}';done|looping over the folderpath obtained and getting total space consued by $path/2020* with the help of tr and awk|
 |zcat some.log.gz\|grep Throughput\|awk '{ sum+=$3}END{print "Average = ", sum/NR}'  Average =  2.78423|We are using awk with a bit of script to filter and sum our output|
 |echo stackoverflow\|tr -d '\n' \| wc -c|Just want to count number of letters from command line, it will give 13|
-|cat some.log \| grep -i speed \| awk '{print $8}' \| sed -r `'s/(\^|<|\[|\])/ /g' \`\| awk -F ',' '{sum+=$1}END{print "Average = ", sum/NR}'|Here powerful sed comes into play ,using regex we calculate the avg speed from logs using AWK command.|
+|cat some.log \| grep -i speed \| awk '{print $8}' \| sed -r 's/(`\`^\|<\|`\[`\|`\]`)/ /g' \| awk -F ',' '{sum+=$1}END{print "Average = ", sum/NR}'|Here powerful sed comes into play ,using regex we calculate the avg speed from logs using AWK command.|
 | **_CREATING, MOVING, COPYING FILES_** |
 | mkdir -p dir1/dir2/dir3  | creating directory inside directory  |
 | mv name.text anothername.txt  | renames file to anothername.txt  |
@@ -23,8 +23,8 @@
 | touch example.txt  |   Creates a text file|
 | touch {file1, file2, file3}  |   Creates multiple text file with the helpof {}|
 | cat example.txt |  Reads the file |
-| echo " some  text" pipe tee newFile.txt  | tee will display text to console as well as create a new file with text  |
-| echo " some more text" pipe tee -a newFile.txt  | tee will display text to console as well as -a append to existing file.  |
+| echo " some  text" \| tee newFile.txt  | tee will display text to console as well as create a new file with text  |
+| echo " some more text" \| tee -a newFile.txt  | tee will display text to console as well as -a append to existing file.  |
 | **_REDIRECTIONAL INPUT/OUTPUT_** |
 | cat file1.txt > /home/user/somedirectory/random_file  | > this is redirectional output, contents of file1 will be output to random file  |
 |  echo " some more text" >> /home/user/somedirectory/random_file | appends to random_file file NOT OVERWRITE  |
@@ -35,11 +35,11 @@
 | wc -c   someText.txt| counts characters  |
 | wc -w  someText.txt| counts words  |
 | wc -l someText.txt | counts lines  |
-| cat test.txt pipe wc -l  | read and pipe the result to count number of lines   |
+| cat test.txt \| wc -l  | read and \| the result to count number of lines   |
 | **_FILE DISPLAY COMMANDS_** |
-| cat test.txt pipe more  |  for large text files, it helps view the content page by page |
-| cat test.txt pipe less  |  for large text files, it helps view the content line by line, j or k to scroll up/down |
-| cat test.txt pipe pg  | for large text files, it helps view the content page by page  |
+| cat test.txt \| more  |  for large text files, it helps view the content page by page |
+| cat test.txt \| less  |  for large text files, it helps view the content line by line, j or k to scroll up/down |
+| cat test.txt \| pg  | for large text files, it helps view the content page by page  |
 |head -5   |  displays 1st 5 lines |
 |tail -5   |  displays last 5 lines |
 |tail -f   |  displays last updated ones |
@@ -77,7 +77,7 @@
 | find /directory/ -iname \*sales\*  | if you're not sure where exactly are these specific files  USE find with wildcard search -i means ignore case sensitivity|
 | locate  | a great command to find if DB is updated, faster than find |
 | ls -al   | list all hidden files with directories  |
-| ls -R  pipe grep ./ | It will list all directories, -R is recursively  |
+| ls -R  \| grep ./ | It will list all directories, -R is recursively  |
 | **_GZIP_** |
 | gzip filename.txt  | compress your file, original will be deleted  |
 | gzip -d   | to decompress    |
@@ -118,7 +118,7 @@
 |ps -aux   |  shows all processes user oriented, where it started, with details |
 |ps axo pid,comm,nice |  shows all processes with pid, command,nice level (-20 to +19,0 is default, higher number low priority) |
 |ps -ef   |  shows all processes according to hierarchy |
-|ps -ef pipe grep test   | presents a lists which consists of test   |
+|ps -ef \| grep test   | presents a lists which consists of test   |
 |kill -9 or -15 pid  | it will kill/terminate the process, -15 means gracefully end the process, -9 means forcefully   |
 |kill -l | lists all kill signals, important for sys admin  |
 |kill -SIGSTOP %1 | stop the job for now, job #1  |
@@ -132,7 +132,7 @@
 |renice -n 10 $(pgrep httpd)  | changing niceness level for all similar programs by using subshell $()  |
 | **_LISTING HIGH CPU USAGE PROCESSES_** | 
 |w  |  number of users logged in  , uptime, load average 0.03 (past 1 min), 0.07 (past 5 min) ,0.06(past 15min) |
-|cat /proc/cpuinfo pipe grep"model name" pipe wc -l  | gives the number of cpu and then divide the load average (for eg). 1.79/2(#no of processors) =0.895 which means 89% of cpu is being utilized |
+|cat /proc/cpuinfo \| grep"model name" \| wc -l  | gives the number of cpu and then divide the load average (for eg). 1.79/2(#no of processors) =0.895 which means 89% of cpu is being utilized |
 |top   | list the processes taking HIGH CPU usage  |
 |top  and then press P | sort processes with highest CPU  |
 |top  and then press M | sort processes with highest Mem  |
@@ -194,7 +194,7 @@
 |umount /mnt/mymount | it will unmount the partition|
 | df -h |shows total disk size with partitions, if ever we see disk use is close to 90% means we're running out of space   |
 | partprobe| whenever we delete/ add a partition, it reloads partition info just in case if kernel is not able to do it, kind of refresh button |
-| du -skh * pipe sort -nr pipe head -5 | lists only top 5 files  |
+| du -skh * \| sort -nr \| head -5 | lists only top 5 files  |
 | **GPT partition**|  modern partitioning scheme which can have many partitions upto 128|
 | gdisk /dev/xvdf | we will create or manage partitions|
 | mkfs -t xfs partitionName(for eg. xvdf1)| it formats the partition with file format (file systems-vfat, ext4, and xfs) |
@@ -234,15 +234,15 @@
 |cd to etc   |diff types of folder ,  weekely, hourly , monthly and just simply put your script  |
 | **_CHECK ENVIRONMENT VARIABLES OR SERVER ENV VARS_** |
 |export | shows all environment varaiables of a machine |  
-|export pipe grep path   |  it will print PATH variable setting |
+|export \| grep path   |  it will print PATH variable setting |
 |echo $PATH   | it will print path settings  |
 |export JAVA_HOME=/usr/bin/jdk  |   |
 | **_VIEW KERNEL MESSAGES_** | VERY HELPFUL IN DIAGNOSING IN CASE OF DEVICE FAILURE , KERNEL WILL BE AWARE OF IT IN CASES OF MALFUNCTION
-|dmesg pipe grep sda | to check if hard disk was directed  |
-|dmesg pipe grep -i usb  | info on USB's  |
-|dmesg pipe grep -i dma   | info on direct memory access  |
-|dmesg pipe grep -i tty   |info on serial ports   |
-|dmesg pipe grep -i memory   |info on how much memory we have   |
+|dmesg \| grep sda | to check if hard disk was directed  |
+|dmesg \| grep -i usb  | info on USB's  |
+|dmesg \| grep -i dma   | info on direct memory access  |
+|dmesg \| grep -i tty   |info on serial ports   |
+|dmesg \| grep -i memory   |info on how much memory we have   |
 |dmesg -c   |dmesg buffer is cleared   |
 | tail -f /var/log/dmesg  |shows latest info from the bottom as it says tail in command   |
 | **_VIRTUAL MEMORY STATISTICS_** | HELPS IDENTIFY PERFORMANCE BOTTLENECKS, ABOUT PROCESSES, PAGING, BLOCK IO, TRAPS, CPU ACTIVITY
@@ -271,7 +271,7 @@
 | Try to figure out which device is having highest IO load  |   |
 |iotop  |  just like top gives you info which process is having heavy IO |
 | **_LIST OF OPEN FILES_**  |
-|lsof pipe wc -l  | lines shows how many open files  |
+|lsof \| wc -l  | lines shows how many open files  |
 |lsof -u root   | filter open files by the user   |
 | lsof -i tcp:22  | filter using port numbers  |
 |kill -9 'Lsof -t -u username| kill processes of specific user   |
