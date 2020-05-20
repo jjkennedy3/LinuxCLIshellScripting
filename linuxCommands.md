@@ -4,17 +4,17 @@
 |   |   |
 |---|---|
 | **_MY CUSTOM IN-LINE AND BASH LOOPING AND DAILY USAGE LOG COMMANDS_** |
-|find . -type f -name "*.log.gz" -exec zgrep -il 22222222 {} `\`;\| xargs zgrep -il mip|. Means current directory, {} is place holder what for list of files what find command found, `\`; is to execute it. Piping it to further filtring list of files with the help of xargs and zgrep|
-|`command checkingAcc 323234234 | grep TEST | awk '{print $NF}' | while read i; do psql-xyz -D dbName -c "select paramA, paramB,paramC, paramD from DB.table where paramA='$i'";done`|looping using while, so first just simply type command and then start action with do...simple as that|
-|find . -type f -name "*.log.gz" -exec zgrep -il "Author name" {} `\`;\|for i in $(xargs);do echo ====$i====;zcat $i\|grep -i "Author name"\|tail -n5;done| looping over filtered list of log files and further looping over each one of them to find out the lines needed
+|find . -type f -name "*.log.gz" -exec zgrep -il 22222222 {} `\`;\| xargs zgrep -il mip|. Means current directory, {} is place holder what for list of files what find command found, (`\`;) is to execute it. Piping it to further filtring list of files with the help of xargs and zgrep|
+|command checkingAcc 323234234 \| grep TEST \| awk '{print $NF}' \| while read i; do psql-xyz -D dbName -c "select paramA, paramB,paramC, paramD from DB.table where paramA='$i'";done|bash looping using while, so first just simply type command and then start action with do...simple as that|
+|find . -type f -name "*.log.gz" -exec zgrep -il "Author name" {} `\`;\|for i in $(xargs);do echo ====$i====;zcat $i\|grep -i "Author name"\|tail -n5;done| looping over filtered list of log files and further zcat over each one of them to find out the lines needed
 |find . -type f -exec zgrep -il string {} `\`; -exec cp -t /home/user/DestinationFolder {} +|Copying all list of files found by zgrep to case# folder|
-|`grep -inrl "Bioethik_Debatte" /var/cqp/upload/heideko/import_files | xargs cp -t bio_files/`|Copying all list of files found by zgrep to case# folder|
-|`find -mtime -1 -type f \| xargs cp -t inner/`|
-|`find -mtime -1 -type f -exec cp '{}' inner/ \;`|more safer|
-|`for i in $(df -h|grep ACS|awk '{print $NF}'); do du -sh $i/2020* | grep G |tr "G" " "|awk '{ sum+=$1} END {print sum}';done`|looping over the folderpath obtained and getting total space consued by $path/2020* with the help of tr and awk|
-|`zcat some.log.gz|grep Throughput|awk '{ sum+=$3}END{print "Average = ", sum/NR}'`  Average =  2.78423|We are using awk with a bit of script to filter the output|
-|`echo stackoverflow|tr -d '\n' | wc -c`|It will give 13|
-|```cat some.log | grep -i speed | awk '{print $8}' | sed -r 's/(\^|<|\[|\])/ /g' | awk -F ',' '{sum+=$1}END{print "Average = ", sum/NR}'```|Here powerful sed comes into play using regex so that we can calculate speed using AWK command|
+|grep -inrl "Bioethik_Debatte" /var/cqp/upload/heideko/import_files \| xargs cp -t bio_files/|Copying all list of files found by zgrep to case# folder|
+|find -mtime -1 -type f \| xargs cp -t inner/|
+|find -mtime -1 -type f -exec cp '{}' inner/ `\`;|more safer|
+|for i in $(df -h\|grep ACS\|awk '{print $NF}'); do du -sh $i/2020* \| grep G \|tr "G" " "\|awk '{ sum+=$1} END {print sum}';done|looping over the folderpath obtained and getting total space consued by $path/2020* with the help of tr and awk|
+|zcat some.log.gz\|grep Throughput\|awk '{ sum+=$3}END{print "Average = ", sum/NR}'  Average =  2.78423|We are using awk with a bit of script to filter and sum our output|
+|echo stackoverflow\|tr -d '\n' \| wc -c|Just want to count number of letters from command line, it will give 13|
+|cat some.log \| grep -i speed \| awk '{print $8}' \| sed -r `'s/(\^|<|\[|\])/ /g' \`\| awk -F ',' '{sum+=$1}END{print "Average = ", sum/NR}'|Here powerful sed comes into play ,using regex we calculate the avg speed from logs using AWK command.|
 | **_CREATING, MOVING, COPYING FILES_** |
 | mkdir -p dir1/dir2/dir3  | creating directory inside directory  |
 | mv name.text anothername.txt  | renames file to anothername.txt  |
